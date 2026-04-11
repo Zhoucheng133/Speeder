@@ -15,9 +15,15 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-
-  double speed = 0;
   bool isReady = false;
+
+  double altidude = 0;
+  double speed = 0;
+
+  // 纬度
+  double latitude = 0;
+  // 经度
+  double longitude = 0;
 
   StreamSubscription<Position>? positionStream;
 
@@ -46,6 +52,9 @@ class _MainAppState extends State<MainApp> {
     ).listen((Position position) {
       setState(() {
         speed = position.speed > 0 ? position.speed * 3.6 : 0;
+        altidude = position.altitude;
+        latitude = position.latitude;
+        longitude = position.longitude;
       });
     });
   }
@@ -62,17 +71,67 @@ class _MainAppState extends State<MainApp> {
     super.dispose();
   }
 
+  String formatLocation(){
+
+    String lati=latitude>0 ? 'N' : 'S';
+    String longi=longitude>0 ? 'E' : 'W';
+
+    return '${latitude.abs().toStringAsFixed(3)} $lati, ${longitude.toStringAsFixed(3)} $longi';
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         body: Center(
-          child: Text(
-            '${(speed).toInt()} km/h',
-            style: TextStyle(
-              fontSize: 40,
-              color: isReady ? Colors.black : Colors.grey,
-            ),
+          child: Column(
+            mainAxisAlignment: .center,
+            crossAxisAlignment: .center,
+            mainAxisSize: .min,
+            children: [
+              Padding(
+                padding: .only(top: 50),
+                child: Text(
+                  '${(speed).toInt()} km/h',
+                  style: TextStyle(
+                    fontSize: 40,
+                    color: isReady ? Colors.black : Colors.grey,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: .only(top: 20),
+                child: Row(
+                  mainAxisSize: .min,
+                  children: [
+                    Icon(
+                      Icons.location_on_rounded,
+                      size: 18,
+                    ),
+                    const SizedBox(width: 5,),
+                    Text(
+                      formatLocation(),
+                    ),
+                  ]
+                )
+              ),
+              Padding(
+                padding: .only(top: 5),
+                child: Row(
+                  mainAxisSize: .min,
+                  children: [
+                    Icon(
+                      Icons.landscape_rounded,
+                      size: 18,
+                    ),
+                    const SizedBox(width: 5,),
+                    Text(
+                      '${(altidude).toInt()} m',
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ),
