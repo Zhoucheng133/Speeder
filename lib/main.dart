@@ -93,7 +93,22 @@ class _MainAppState extends State<MainApp> {
 
   @override
   Widget build(BuildContext context) {
+
+    final brightness = MediaQuery.of(context).platformBrightness;
+
     return MaterialApp(
+      theme:ThemeData(
+        brightness: brightness,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.yellow,
+          brightness: brightness,
+        ),
+        textTheme: brightness==Brightness.dark ? ThemeData.dark().textTheme.apply(
+          bodyColor: Colors.white,
+          displayColor: Colors.white,
+        ) : ThemeData.light().textTheme,
+      ),
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Center(
           child: Column(
