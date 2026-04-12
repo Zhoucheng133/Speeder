@@ -118,12 +118,24 @@ class _MainAppState extends State<MainApp> {
             children: [
               Padding(
                 padding: .only(top: 50),
-                child: Text(
-                  '${(speed).toInt()} km/h',
-                  style: TextStyle(
-                    fontSize: 40,
-                    color: isReady ? Colors.black : Colors.grey,
-                  ),
+                child: Row(
+                  mainAxisSize: .min,
+                  crossAxisAlignment: .end,
+                  children: [
+                    Text(
+                      '${(speed).toInt()}',
+                      style: TextStyle(
+                        height: 1.0,
+                        fontSize: 50,
+                      ),
+                    ),
+                    Padding(
+                      padding: .only(left: 5),
+                      child: Text(
+                        'km/h',
+                      ),
+                    )
+                  ],
                 ),
               ),
               Padding(
