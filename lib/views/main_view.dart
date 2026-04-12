@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
+import 'package:speeder/views/settings_view.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
@@ -89,70 +91,83 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: .center,
-          crossAxisAlignment: .center,
-          mainAxisSize: .min,
-          children: [
-            Padding(
-              padding: .only(top: 50),
-              child: Row(
-                mainAxisSize: .min,
-                crossAxisAlignment: .end,
-                children: [
-                  Text(
-                    '${(speed).toInt()}',
-                    style: TextStyle(
-                      height: 1.0,
-                      fontSize: 50,
-                    ),
+      body: Stack(
+        children: [
+          Center(
+            child: Column(
+              mainAxisAlignment: .center,
+              crossAxisAlignment: .center,
+              // mainAxisSize: .min,
+              children: [
+                Padding(
+                  padding: .only(top: 50),
+                  child: Row(
+                    mainAxisSize: .min,
+                    crossAxisAlignment: .end,
+                    children: [
+                      Text(
+                        '${(speed).toInt()}',
+                        style: TextStyle(
+                          height: 1.0,
+                          fontSize: 50,
+                        ),
+                      ),
+                      Padding(
+                        padding: .only(left: 5),
+                        child: Text(
+                          'km/h',
+                        ),
+                      )
+                    ],
                   ),
-                  Padding(
-                    padding: .only(left: 5),
-                    child: Text(
-                      'km/h',
-                    ),
+                ),
+                Padding(
+                  padding: .only(top: 20),
+                  child: Row(
+                    mainAxisSize: .min,
+                    children: [
+                      Icon(
+                        Icons.location_on_rounded,
+                        size: 18,
+                      ),
+                      const SizedBox(width: 5,),
+                      Text(
+                        formatLocation(),
+                      ),
+                    ]
                   )
-                ],
-              ),
+                ),
+                Padding(
+                  padding: .only(top: 5),
+                  child: Row(
+                    mainAxisSize: .min,
+                    children: [
+                      Icon(
+                        Icons.landscape_rounded,
+                        size: 18,
+                      ),
+                      const SizedBox(width: 5,),
+                      Text(
+                        '${(altidude).toInt()} m',
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
-            Padding(
-              padding: .only(top: 20),
-              child: Row(
-                mainAxisSize: .min,
-                children: [
-                  Icon(
-                    Icons.location_on_rounded,
-                    size: 18,
-                  ),
-                  const SizedBox(width: 5,),
-                  Text(
-                    formatLocation(),
-                  ),
-                ]
-              )
-            ),
-            Padding(
-              padding: .only(top: 5),
-              child: Row(
-                mainAxisSize: .min,
-                children: [
-                  Icon(
-                    Icons.landscape_rounded,
-                    size: 18,
-                  ),
-                  const SizedBox(width: 5,),
-                  Text(
-                    '${(altidude).toInt()} m',
-                  ),
-                ],
-              ),
+          ),
+          Positioned(
+            top: MediaQuery.of(context).padding.top+20,
+            right: 20,
+            child: IconButton(
+              onPressed: (){
+                Get.to(() => SettingsView());
+              }, 
+              icon: Icon(Icons.settings_rounded)
             )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

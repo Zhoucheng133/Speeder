@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:speeder/controllers/controller.dart';
+import 'package:speeder/lang/en_us.dart';
 import 'package:speeder/lang/zh_cn.dart';
+import 'package:speeder/lang/zh_tw.dart';
 import 'package:speeder/views/main_view.dart';
 
-void main() {
-  Get.put(Controller());
+Future<void> main() async {
+  final controller=Get.put(Controller());
+  await controller.initLang();
   runApp(const MainApp());
 }
 
@@ -20,9 +23,9 @@ class MainApp extends StatefulWidget {
 class MainTranslations extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
-    // 'en_US': enUS,
+    'en_US': enUS,
     'zh_CN': zhCN,
-    // 'zh_TW': zhTW,
+    'zh_TW': zhTW,
   };
 }
 
