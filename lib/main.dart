@@ -71,12 +71,24 @@ class _MainAppState extends State<MainApp> {
     super.dispose();
   }
 
-  String formatLocation(){
+  String formatLocation() {
+    String latDir = latitude >= 0 ? 'N' : 'S';
+    String lonDir = longitude >= 0 ? 'E' : 'W';
 
-    String lati=latitude>0 ? 'N' : 'S';
-    String longi=longitude>0 ? 'E' : 'W';
+    double latAbs = latitude.abs();
+    int latDeg = latAbs.toInt();
+    double latMinDec = (latAbs - latDeg) * 60;
+    int latMin = latMinDec.toInt();
+    double latSec = (latMinDec - latMin) * 60;
 
-    return '${latitude.abs().toStringAsFixed(3)} $lati, ${longitude.toStringAsFixed(3)} $longi';
+    double lonAbs = longitude.abs();
+    int lonDeg = lonAbs.toInt();
+    double lonMinDec = (lonAbs - lonDeg) * 60;
+    int lonMin = lonMinDec.toInt();
+    double lonSec = (lonMinDec - lonMin) * 60;
+
+    return '$latDeg°$latMin′${latSec.toInt()}″ $latDir, '
+        '$lonDeg°$lonMin′${lonSec.toInt()}″ $lonDir';
   }
 
   @override
