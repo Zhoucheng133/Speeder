@@ -47,6 +47,29 @@ class _SettingsViewState extends State<SettingsView> {
               onTap: (){
                 languageDialog(context);
               },
+            ),
+            ListTile(
+              title: Row(
+                children: [
+                  FaIcon(
+                    controller.darkMode.value ? FontAwesomeIcons.moon : FontAwesomeIcons.sun,
+                    size: 16,
+                  ),
+                  Padding(
+                    padding: .only(left: 5),
+                    child: Text('darkMode'.tr),
+                  ),
+                ],
+              ),
+              subtitle: Text(
+                controller.autoDark.value ? "auto".tr : controller.darkMode.value ? 'enabled'.tr : 'disabled'.tr,
+                style: TextStyle(
+                  color: Colors.grey
+                ),
+              ),
+              onTap: (){
+                darkModeDialog(context);
+              },
             )
           ],
         ),

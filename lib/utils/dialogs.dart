@@ -43,3 +43,62 @@ void languageDialog(BuildContext context){
     ),
   );
 }
+
+void darkModeDialog(BuildContext context){
+  final Controller controller=Get.find();
+  showDialog(
+    context: context, 
+    builder: (context)=>AlertDialog(
+      title: Text("darkMode".tr),
+      content: Obx(
+        ()=> Column(
+            mainAxisSize: .min,
+            children: [
+            Row(
+              children: [
+                Expanded(child: Text('followSystem'.tr)),
+                Transform.scale(
+                  scale: 0.8,
+                  child: Switch(
+                    value: controller.autoDark.value, 
+                    onChanged: (val){
+                      controller.autoDark.value=val;
+                      if(val){
+                        controller.darkMode.value=MediaQuery.of(context).platformBrightness==Brightness.dark;
+                      }
+                    }
+                  ),
+                )
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(child: Text('enableDarkMode'.tr)),
+                Transform.scale(
+                  scale: 0.8,
+                  child: Switch(
+                    value: controller.darkMode.value, 
+                    onChanged: controller.autoDark.value ? null : (val){
+                      if(controller.autoDark.value){
+                        return;
+                      }
+                      controller.darkMode.value=val;
+                    }
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+      actions: [
+        ElevatedButton(
+          child: Text('ok'.tr),
+          onPressed: (){
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    )
+  );
+}
