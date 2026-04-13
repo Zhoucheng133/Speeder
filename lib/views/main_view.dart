@@ -89,72 +89,77 @@ class _MainViewState extends State<MainView> {
         '$lonDeg°$lonMin′${lonSec.toInt()}″ $lonDir';
   }
 
+  bool flip=false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          Center(
-            child: Column(
-              mainAxisAlignment: .center,
-              crossAxisAlignment: .center,
-              // mainAxisSize: .min,
-              children: [
-                Padding(
-                  padding: .only(top: 50),
-                  child: Row(
-                    mainAxisSize: .min,
-                    crossAxisAlignment: .end,
-                    children: [
-                      Text(
-                        '${(speed).toInt()}',
-                        style: TextStyle(
-                          height: 1.0,
-                          fontSize: 50,
+          Transform.flip(
+            flipY: flip,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: .center,
+                crossAxisAlignment: .center,
+                // mainAxisSize: .min,
+                children: [
+                  Padding(
+                    padding: .only(top: 50),
+                    child: Row(
+                      mainAxisSize: .min,
+                      crossAxisAlignment: .end,
+                      children: [
+                        Text(
+                          '${(speed).toInt()}',
+                          style: TextStyle(
+                            height: 1.0,
+                            fontSize: 50,
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: .only(left: 5),
-                        child: Text(
-                          'km/h',
-                        ),
-                      )
-                    ],
+                        Padding(
+                          padding: .only(left: 5),
+                          child: Text(
+                            'km/h',
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: .only(top: 20),
-                  child: Row(
-                    mainAxisSize: .min,
-                    children: [
-                      Icon(
-                        Icons.location_on_rounded,
-                        size: 18,
-                      ),
-                      const SizedBox(width: 5,),
-                      Text(
-                        formatLocation(),
-                      ),
-                    ]
+                  Padding(
+                    padding: .only(top: 20),
+                    child: Row(
+                      mainAxisSize: .min,
+                      children: [
+                        Icon(
+                          Icons.location_on_rounded,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 5,),
+                        Text(
+                          formatLocation(),
+                        ),
+                      ]
+                    )
+                  ),
+                  Padding(
+                    padding: .only(top: 5),
+                    child: Row(
+                      mainAxisSize: .min,
+                      children: [
+                        Icon(
+                          Icons.landscape_rounded,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 5,),
+                        Text(
+                          '${(altidude).toInt()} m',
+                        ),
+                      ],
+                    ),
                   )
-                ),
-                Padding(
-                  padding: .only(top: 5),
-                  child: Row(
-                    mainAxisSize: .min,
-                    children: [
-                      Icon(
-                        Icons.landscape_rounded,
-                        size: 18,
-                      ),
-                      const SizedBox(width: 5,),
-                      Text(
-                        '${(altidude).toInt()} m',
-                      ),
-                    ],
-                  ),
-                )
-              ],
+                ],
+              ),
             ),
           ),
           Positioned(
@@ -165,6 +170,18 @@ class _MainViewState extends State<MainView> {
                 Get.to(() => SettingsView());
               }, 
               icon: Icon(Icons.settings_rounded)
+            )
+          ),
+          Positioned(
+            top: MediaQuery.of(context).padding.top+20,
+            left: 20,
+            child: IconButton(
+              onPressed: (){
+                setState(() {
+                  flip = !flip;
+                });
+              }, 
+              icon: Icon(Icons.compare_arrows_rounded)
             )
           )
         ],
