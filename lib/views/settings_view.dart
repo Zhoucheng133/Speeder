@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speeder/controllers/controller.dart';
 import 'package:speeder/utils/dialogs.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
@@ -70,6 +72,33 @@ class _SettingsViewState extends State<SettingsView> {
               onTap: (){
                 darkModeDialog(context);
               },
+            ),
+            ListTile(
+              title: Row(
+                children: [
+                  FaIcon(
+                    FontAwesomeIcons.eye,
+                    size: 16,
+                  ),
+                  Padding(
+                    padding: .only(left: 5),
+                    child: Text('keepScreenOn'.tr),
+                  ),
+                ],
+              ),
+              trailing: Switch(
+                value: controller.keepScreenOn.value, 
+                onChanged: (val) async {
+                  controller.keepScreenOn.value = val;
+                  final prefs=await SharedPreferences.getInstance();
+                  await prefs.setBool('keepScreenOn', val);
+                  if(val){
+                    WakelockPlus.enable();
+                  }else{
+                    WakelockPlus.disable();
+                  }
+                }
+              ),
             )
           ],
         ),

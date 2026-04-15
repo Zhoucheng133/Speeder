@@ -8,8 +8,9 @@ import 'package:speeder/lang/zh_tw.dart';
 import 'package:speeder/views/main_view.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final controller=Get.put(Controller());
-  await controller.initLang();
+  await controller.init();
   runApp(const MainApp());
 }
 

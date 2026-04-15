@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 class LanguageType{
   String name;
@@ -20,15 +21,20 @@ List<LanguageType> get supportedLocales => [
 class Controller extends GetxController {
   RxBool autoDark=true.obs;
   RxBool darkMode=false.obs;
+  RxBool keepScreenOn=true.obs;
 
   Rx<LanguageType> lang=Rx(supportedLocales[0]);
 
   late SharedPreferences prefs;
 
-  Future<void> initLang() async {
+  Future<void> init() async {
     prefs=await SharedPreferences.getInstance();
 
     int? langIndex=prefs.getInt("langIndex");
+    keepScreenOn.value=prefs.getBool("keepScreenOn")??true;
+    if(keepScreenOn.value){
+      WakelockPlus.enable();
+    }
 
     if(langIndex==null){
       final deviceLocale=PlatformDispatcher.instance.locale;
