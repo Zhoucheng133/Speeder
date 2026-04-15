@@ -8,4 +8,5 @@ const Map<String, String> zhCN = {
   'auto': '自动',
   'followSystem': '跟随系统',
   'enableDarkMode': '启用深色模式',
+  'keepScreenOn': '保持屏幕常亮',
 };
