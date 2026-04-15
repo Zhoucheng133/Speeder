@@ -53,13 +53,11 @@ class _MainAppState extends State<MainApp> {
         supportedLocales: supportedLocales.map((item)=>item.locale).toList(),
         theme: ThemeData(
           brightness: controller.darkMode.value ? Brightness.dark : Brightness.light,
-          fontFamily: 'PuHui', 
           colorScheme: ColorScheme.fromSeed(
             seedColor: Colors.yellow,
             brightness: controller.darkMode.value ? Brightness.dark : Brightness.light,
           ),
           textTheme: controller.darkMode.value ? ThemeData.dark().textTheme.apply(
-            fontFamily: 'PuHui',
             bodyColor: Colors.white,
             displayColor: Colors.white,
           ) : ThemeData.light().textTheme,
