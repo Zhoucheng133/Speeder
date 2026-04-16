@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:speeder/utils/cals.dart';
 import 'package:speeder/views/settings_view.dart';
+import 'package:speeder/views/track_view.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
@@ -27,20 +29,17 @@ class _MainViewState extends State<MainView> {
   // 最高速度
   double maxSpeed = 0;
 
+  // 时间
+  int seconds = 0;
+
+  Timer? timer;
+
   StreamSubscription<Position>? positionStream;
 
   bool flip=false;
   bool tracking=false;
   double distance=0.0;
   Position? lastPosition;
-
-  String formatDistance() {
-    if (distance < 1000) {
-      return '${distance.toInt()} m';
-    } else {
-      return '${(distance / 1000).toStringAsFixed(2)} km';
-    }
-  }
 
   void trackHandler(Position position){
     if(!tracking){
@@ -56,6 +55,11 @@ class _MainViewState extends State<MainView> {
       distance += len;
     }
     lastPosition = position;
+    if(position.speed * 3.6 > maxSpeed){
+      setState(() {
+        maxSpeed = position.speed > 0 ? position.speed * 3.6 : 0;
+      });
+    }
   }
 
   Future<void> init() async {
@@ -100,6 +104,7 @@ class _MainViewState extends State<MainView> {
   @override
   void dispose() {
     positionStream?.cancel();
+    timer?.cancel();
     super.dispose();
   }
 
@@ -201,7 +206,7 @@ class _MainViewState extends State<MainView> {
                         ),
                         const SizedBox(width: 5,),
                         Text(
-                          formatDistance(),
+                          formatDistance(distance),
                         ),
                       ]
                     ),
@@ -235,14 +240,36 @@ class _MainViewState extends State<MainView> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            tracking = !tracking;
-            if(!tracking){
-              distance = 0;
-              lastPosition = null;
+        onPressed: () async {
+          if (tracking) {
+            timer?.cancel();
+            setState(() {
+              tracking = false;
+            });
+            await Get.to(() => TrackView(
+              maxSpeed: maxSpeed,
+              distance: distance,
+              seconds: seconds,
+            ));
+            if (mounted) {
+              setState(() {
+                distance = 0;
+                lastPosition = null;
+                maxSpeed = 0;
+                seconds = 0;
+              });
             }
-          });
+          } else {
+            setState(() {
+              tracking = true;
+            });
+
+            timer = Timer.periodic(Duration(seconds: 1), (t) {
+              setState(() {
+                seconds++;
+              });
+            });
+          }
         },
         child: FaIcon(
           tracking ? FontAwesomeIcons.stop : FontAwesomeIcons.route,

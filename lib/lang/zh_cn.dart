@@ -9,4 +9,9 @@ const Map<String, String> zhCN = {
   'followSystem': '跟随系统',
   'enableDarkMode': '启用深色模式',
   'keepScreenOn': '保持屏幕常亮',
+  'track': '轨迹',
+  'distance': '距离',
+  'maxSpeed': '最高速度',
+  'time': '时间',
+  'averageSpeed': '平均速度',
 };
