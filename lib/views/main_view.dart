@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:speeder/views/settings_view.dart';
@@ -23,7 +24,39 @@ class _MainViewState extends State<MainView> {
   // 经度
   double longitude = 0;
 
+  // 最高速度
+  double maxSpeed = 0;
+
   StreamSubscription<Position>? positionStream;
+
+  bool flip=false;
+  bool tracking=false;
+  double distance=0.0;
+  Position? lastPosition;
+
+  String formatDistance() {
+    if (distance < 1000) {
+      return '${distance.toInt()} m';
+    } else {
+      return '${(distance / 1000).toStringAsFixed(2)} km';
+    }
+  }
+
+  void trackHandler(Position position){
+    if(!tracking){
+      return;
+    }
+    if (lastPosition != null) {
+      double len = Geolocator.distanceBetween(
+        lastPosition!.latitude,
+        lastPosition!.longitude,
+        position.latitude,
+        position.longitude,
+      );
+      distance += len;
+    }
+    lastPosition = position;
+  }
 
   Future<void> init() async {
     bool serviceEnabled;
@@ -54,6 +87,7 @@ class _MainViewState extends State<MainView> {
         latitude = position.latitude;
         longitude = position.longitude;
       });
+      trackHandler(position);
     });
   }
 
@@ -88,8 +122,6 @@ class _MainViewState extends State<MainView> {
     return '$latDeg°$latMin′${latSec.toInt()}″ $latDir, '
         '$lonDeg°$lonMin′${lonSec.toInt()}″ $lonDir';
   }
-
-  bool flip=false;
 
   @override
   Widget build(BuildContext context) {
@@ -157,6 +189,22 @@ class _MainViewState extends State<MainView> {
                         ),
                       ],
                     ),
+                  ),
+                  if(tracking) Padding(
+                    padding: .only(top: 20),
+                    child: Row(
+                      mainAxisSize: .min,
+                      children: [
+                        FaIcon(
+                          FontAwesomeIcons.route,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 5,),
+                        Text(
+                          formatDistance(),
+                        ),
+                      ]
+                    ),
                   )
                 ],
               ),
@@ -183,8 +231,23 @@ class _MainViewState extends State<MainView> {
               }, 
               icon: Icon(Icons.compare_arrows_rounded)
             )
-          )
+          ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            tracking = !tracking;
+            if(!tracking){
+              distance = 0;
+              lastPosition = null;
+            }
+          });
+        },
+        child: FaIcon(
+          tracking ? FontAwesomeIcons.stop : FontAwesomeIcons.route,
+          size: 20,
+        ),
       ),
     );
   }
