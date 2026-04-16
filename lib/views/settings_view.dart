@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:gps_tracker/controllers/controller.dart';
+import 'package:gps_tracker/utils/dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:speeder/controllers/controller.dart';
-import 'package:speeder/utils/dialogs.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 class SettingsView extends StatefulWidget {

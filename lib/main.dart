@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
-import 'package:speeder/controllers/controller.dart';
-import 'package:speeder/lang/en_us.dart';
-import 'package:speeder/lang/zh_cn.dart';
-import 'package:speeder/lang/zh_tw.dart';
-import 'package:speeder/views/main_view.dart';
+import 'package:gps_tracker/controllers/controller.dart';
+import 'package:gps_tracker/lang/en_us.dart';
+import 'package:gps_tracker/lang/zh_cn.dart';
+import 'package:gps_tracker/lang/zh_tw.dart';
+import 'package:gps_tracker/views/main_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

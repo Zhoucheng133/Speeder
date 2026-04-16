@@ -1,5 +1,5 @@
-name: speeder
-description: "A GPS speedometer app"
+name: gps_tracker
+description: "A GPS tracker app"
 publish_to: 'none'
 version: 0.1.0
 
@@ -12,10 +12,10 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   font_awesome_flutter: ^11.0.0
-  geolocator: ^14.0.2
+  geolocator: ^14.0.1
   get: ^4.7.3
   shared_preferences: ^2.5.5
-  wakelock_plus: ^1.5.2
+  wakelock_plus: ^1.6.0
 
 dev_dependencies:
   flutter_test:

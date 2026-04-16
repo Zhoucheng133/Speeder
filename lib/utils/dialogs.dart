@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:speeder/controllers/controller.dart';
+import 'package:gps_tracker/controllers/controller.dart';
 
 void languageDialog(BuildContext context){
 

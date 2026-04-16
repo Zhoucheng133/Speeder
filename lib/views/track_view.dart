@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:speeder/utils/cals.dart';
+import 'package:gps_tracker/utils/cals.dart';
 
 class TrackView extends StatefulWidget {
 
