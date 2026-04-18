@@ -1,3 +1,17 @@
 const Map<String, String> zhTW = {
-
+  'settings': '設定',
+  'language': '語言',
+  'ok': '完成',
+  'darkMode': '深色模式',
+  'enabled': '已啟用',
+  'disabled': '已停用',
+  'auto': '自動',
+  'followSystem': '跟隨系統',
+  'enableDarkMode': '啟用深色模式',
+  'keepScreenOn': '保持螢幕常亮',
+  'track': '軌跡',
+  'distance': '距離',
+  'maxSpeed': '最高速度',
+  'time': '時間',
+  'averageSpeed': '平均速度',
 };

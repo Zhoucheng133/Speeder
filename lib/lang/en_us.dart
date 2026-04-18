@@ -1,3 +1,17 @@
 const Map<String, String> enUS = {
-  
+  'settings': 'Settings',
+  'language': 'Language',
+  'ok': 'Done',
+  'darkMode': 'Dark Mode',
+  'enabled': 'Enabled',
+  'disabled': 'Disabled',
+  'auto': 'Auto',
+  'followSystem': 'Follow System',
+  'enableDarkMode': 'Enable Dark Mode',
+  'keepScreenOn': 'Keep Screen On',
+  'track': 'Track',
+  'distance': 'Distance',
+  'maxSpeed': 'Max Speed',
+  'time': 'Time',
+  'averageSpeed': 'Avg Speed',
 };
